@@ -1,6 +1,37 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function AgregarEmpleado() {
+
+  let navegacion = useNavigate();
+
+  const [empleado, setEmpleado] = useState({
+    nombre: "",
+    apellido: "",
+    departamento: "",
+    sueldo: ""
+  });
+
+  const {nombre, apellido, departamento, sueldo} = empleado;
+
+  // Spread operator ... (expandir los atributos)
+  const onInputChange = (e) => {
+    setEmpleado({
+      ...empleado,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  // Nos comunicamos con el backend
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const urlBase = "http://localhost:8080/rrhh-app/empleados";
+    await axios.post(urlBase, empleado);
+    // Redirigimos a la página de inicio
+    navegacion("/");
+  }
+
   return (
     <div>
       <div classNameName="container">
@@ -8,22 +39,55 @@ export default function AgregarEmpleado() {
           <h3>Agergar Empleado</h3>
         </div>
 
-        <form>
+        <form onSubmit={(e) => onSubmit(e)}>
           <div className="mb-3">
             <label htmlFor="nombre" className="form-label">Nombre</label>
-            <input type="text" className="form-control" id='nombre' name='nombre' required={true}></input>
+            <input
+              type="text"
+              className="form-control"
+              id="nombre"
+              name="nombre"
+              required={true}
+              value={nombre}
+              onChange={(e) => onInputChange(e)}>
+            </input>
           </div>
           <div className="mb-3">
             <label htmlFor="apellido" className="form-label">Apellido</label>
-            <input type="text" className="form-control" id='apellido' name='apellido' required={true}></input>
+            <input
+              type="text"
+              className="form-control"
+              id="apellido"
+              name="apellido"
+              required={true}
+              value={apellido}
+              onChange={(e) => onInputChange(e)}>
+            </input>
           </div>
           <div className="mb-3">
             <label htmlFor="departamento" className="form-label">Departamento</label>
-            <input type="text" className="form-control" id='departamento' name='departamento' required={true}></input>
+            <input
+              type="text"
+              className="form-control"
+              id="departamento"
+              name="departamento"
+              required={true}
+              value={departamento}
+              onChange={(e) => onInputChange(e)}>
+            </input>
           </div>
           <div className="mb-3">
             <label htmlFor="sueldo" className="form-label">Sueldo</label>
-            <input type="number" step={"any"} className="form-control" id='sueldo' name='sueldo' required={true}></input>
+            <input
+              type="number"
+              step={"any"}
+              className="form-control"
+              id="sueldo"
+              name="sueldo"
+              required={true}
+              value={sueldo}
+              onChange={(e) => onInputChange(e)}>
+            </input>
           </div>
           <div className="text-center">
             <button type="submit" className="btn btn-warning btn-sm me-3">Agregar</button>
