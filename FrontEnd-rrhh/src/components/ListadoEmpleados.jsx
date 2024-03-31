@@ -35,6 +35,7 @@ export default function ListadoEmpleados() {
 						<th scope="col">Apellido</th>
 						<th scope="col">Departamento</th>
 						<th scope="col">Sueldo</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,6 +52,11 @@ export default function ListadoEmpleados() {
 									displayType={'text'}
 									thousandSeparator=',' prefix={'$'}
 									decimalScale={2} fixedDecimalScale/>
+								</td>
+								<td className="text-center">
+									<div>
+											<a className="btn btn-warning btn-sm me-3" href={`/editar/${empleado.idEmpleado}`}>Editar</a>
+									</div>
 								</td>
 							</tr>
 						))

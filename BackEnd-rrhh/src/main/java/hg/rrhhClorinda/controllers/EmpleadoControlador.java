@@ -38,4 +38,20 @@ public class EmpleadoControlador {
         }
         return ResponseEntity.ok(empleado);
     }
+
+    @PutMapping("/empleados/{id}")
+    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Integer id,
+                                                       @RequestBody Empleado empleadoRecibido) {
+        Empleado empleado = empleadoServicio.buscarEmpleadoPorId(id);
+        if (empleado == null) {
+            throw new RecursoNoEncontradoException("Empleado " + id + " no existe");
+        } else {
+            empleado.setNombre(empleadoRecibido.getNombre());
+            empleado.setApellido(empleadoRecibido.getApellido());
+            empleado.setDepartamento(empleadoRecibido.getDepartamento());
+            empleado.setSueldo(empleadoRecibido.getSueldo());
+        }
+        empleadoServicio.guardarEmpleado(empleado);
+        return ResponseEntity.ok(empleado);
+    }
 }
