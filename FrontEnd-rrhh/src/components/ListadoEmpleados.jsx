@@ -24,6 +24,10 @@ export default function ListadoEmpleados() {
     cargarEmpleados();
 	};
 
+	const viewAlert = () => {
+		alert("¿Seguro que desea eliminar el empleado?");
+	};
+
 	return (
 		<div className="container">
 			<div
@@ -61,7 +65,7 @@ export default function ListadoEmpleados() {
 								<td className="text-center">
 									<div>
 											<a className="btn btn-warning btn-sm me-3" href={`/editar/${empleado.idEmpleado}`}>Editar</a>
-											<a onClick={ () => eliminarEmpleado(empleado.idEmpleado)}
+											<a onClick={ () => eliminarEmpleado(empleado.idEmpleado, viewAlert())}
 													className="btn btn-danger btn-sm">Eliminar</a>
 									</div>
 								</td>
