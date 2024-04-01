@@ -4,7 +4,7 @@ import { NumericFormat } from 'react-number-format';
 
 export default function ListadoEmpleados() {
 
-	const urlBAse = "http://localhost:8080/rrhh-app/empleados";
+	const urlBase = "http://localhost:8080/rrhh-app/empleados";
 
 	const[empleados, setEmpleados] = useState([]);
 
@@ -13,10 +13,15 @@ export default function ListadoEmpleados() {
 	}, []);
 
 	const cargarEmpleados = async () => {
-		const resultado = await axios.get(urlBAse);
+		const resultado = await axios.get(urlBase);
 		console.log("Resultado de cargar empleados");
 		console.log(resultado.data);
 		setEmpleados(resultado.data);
+	};
+
+	const eliminarEmpleado = async (id) => {
+		await axios.delete(`${urlBase}/${id}`);
+    cargarEmpleados();
 	};
 
 	return (
@@ -56,6 +61,8 @@ export default function ListadoEmpleados() {
 								<td className="text-center">
 									<div>
 											<a className="btn btn-warning btn-sm me-3" href={`/editar/${empleado.idEmpleado}`}>Editar</a>
+											<a onClick={ () => eliminarEmpleado(empleado.idEmpleado)}
+													className="btn btn-danger btn-sm">Eliminar</a>
 									</div>
 								</td>
 							</tr>
